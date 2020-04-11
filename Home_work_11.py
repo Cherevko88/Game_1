@@ -99,30 +99,50 @@ v1 = Vampire(name="Drac", strength=100, health=500)
 r1 = Rogue(name="Krok", strength=70, health=1000)
 m1 = Monk(name="Panda Kunfu", strength=90, health=500)
 
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
-k1.attack(r1)
-print(r1._health)
+
+class Battle():
+    _opponent1 = None
+    _opponent2 = None
+    _units = None
+
+    def __init__(self, opp1, opp2):
+        if isinstance(opp1, Unit) and isinstance(opp2, Unit):
+            self._opponent1 = opp1
+            self._opponent2 = opp2
+            self._units = (self._opponent1, self._opponent2)
+
+    def _battle(self):
+        random_unit = random.choice(self._units)
+        if random_unit == self._opponent1:
+            while True:
+                if not self._opponent1._health == 0 or not self._opponent2._health == 0:
+                    self._opponent1._attack(self._opponent2)
+                    print(self._opponent2._health, self._opponent2.__class__.__name__)
+                    if self._opponent2._health == 0:
+                        return f"У бойца класса {self._opponent2.__class__.__name__} осталось {self._opponent2._health} "\
+                               f" жизней и он потерпел порожение"
+
+                    self._opponent2._attack(self._opponent1)
+                    print(self._opponent1._health, self._opponent1.__class__.__name__)
+                    if self._opponent1.health == 0:
+                        return f"У бойца класса {self._opponent1.__class__.__name__} осталось {self._opponent1._health} "\
+                               f" жизней и он потерпел порожение"
+        else:
+            while True:
+                if not self._opponent1._health == 0 or not self._opponent2._health == 0:
+                    self._opponent2._attack(self._opponent1)
+                    print(self._opponent1._health, self._opponent1.__class__.__name__)
+                    if self._opponent1.health == 0:
+                        return f"У бойца класса {self._opponent1.__class__.__name__} осталось {self._opponent1._health} "\
+                               f" жизней и он потерпел порожение"
+                    self._opponent1._attack(self._opponent2)
+                    print(self._opponent2._health, self._opponent2.__class__.__name__)
+                    if self._opponent2._health == 0:
+                        return f"У бойца класса {self._opponent2.__class__.__name__} осталось {self._opponent2._health} "\
+                               f" жизней и он потерпел порожение"
+
+battle1 = Battle(k1, r1)
+print(battle1._battle())
+
+
+
